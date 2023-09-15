@@ -57,7 +57,7 @@
       "type": "string",
       "defaultValue": ""
     },
-        "storageAccountName": {
+    "storageAccountName": {
       "type": "string",
       "defaultValue": ""
     },
