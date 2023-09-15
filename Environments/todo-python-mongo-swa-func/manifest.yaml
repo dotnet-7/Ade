@@ -12,3 +12,18 @@ parameters:
     required: true
     type: string
     description: Name of the environment
+  - id: location
+    name: location
+    required: true
+    type: string
+    allowed:
+      - 'westus2'
+      - 'centralus'
+      - 'eastus2'
+      - 'westeurope'
+      - 'eastasia'
+      - 'eastasiastage'
+      - 'eastus2euap'
+      - 'centraluseuap'
+    default: 'eastus2'
+    description: 'The location to deploy the resource group.'
