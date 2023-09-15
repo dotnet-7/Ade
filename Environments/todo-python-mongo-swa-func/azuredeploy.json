@@ -19,11 +19,10 @@
     },
     "location": {
       "type": "string",
-      "defaultValue": "eastus2"
+      "minLength": 1,
       "metadata": {
         "description": "Primary location for all resources"
-      },
-        "minLength": 1
+      }
     },
     "apiServiceName": {
       "type": "string",
@@ -57,7 +56,7 @@
       "type": "string",
       "defaultValue": ""
     },
-    "storageAccountName": {
+        "storageAccountName": {
       "type": "string",
       "defaultValue": ""
     },
@@ -232,7 +231,7 @@
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2022-09-01",
       "name": "web",
-            "properties": {
+      "properties": {
         "expressionEvaluationOptions": {
           "scope": "inner"
         },
