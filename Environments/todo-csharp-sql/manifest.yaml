@@ -15,7 +15,7 @@ parameters:
   - id: sqlAdminPassword
     name: sqlAdminPassword
     required: true
-    type: password
+    type: string
     description: Password of the SQL admin
   - id: appUserPassword
     name: appUserPassword
