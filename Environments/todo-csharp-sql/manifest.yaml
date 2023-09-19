@@ -15,10 +15,10 @@ parameters:
   - id: sqlAdminPassword
     name: sqlAdminPassword
     required: true
-    type: string
+    type: securestring
     description: Password of the SQL admin
   - id: appUserPassword
     name: appUserPassword
     required: true
-    type: string
+    type: securestring
     description: Password of the app user
