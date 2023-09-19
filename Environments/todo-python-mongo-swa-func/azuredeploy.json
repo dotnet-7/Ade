@@ -19,17 +19,6 @@
     },
     "location": {
       "type": "string",
-      "defaultValue": "westus2",
-      "allowedValues": [
-        "westus2",
-        "eastus2",
-        "centralus",
-        "westeurope",
-        "eastasia",
-        "eastasiastage",
-        "eastus2euap",
-        "centraluseuap"
-      ],
       "minLength": 1,
       "metadata": {
         "description": "Primary location for all resources"
