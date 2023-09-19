@@ -13,9 +13,9 @@ parameters:
     type: string
     description: Name of the environment
     
-  - id: runtime
-    name: Runtime
-    description: 'The language worker runtime to load in the function app.'
+  - id: location
+    name: location
+    description: 'The location of the resources.'
     type: string
     allowed:
       - 'westus2'
