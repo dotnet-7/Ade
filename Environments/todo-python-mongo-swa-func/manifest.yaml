@@ -12,3 +12,18 @@ parameters:
     required: true
     type: string
     description: Name of the environment
+    
+  - id: runtime
+    name: Runtime
+    description: 'The language worker runtime to load in the function app.'
+    type: string
+    allowed:
+      - 'westus2'
+      - 'eastus2'
+      - 'centralus'
+      - 'westeurope'
+      - 'eastasia'
+      - 'eastasiastage'
+      - 'eastus2euap'
+      - 'centraluseuap'
+    default: 'westus2'
