@@ -12,11 +12,13 @@ parameters:
     required: true
     type: string
     description: Name of the environment
+    
   - id: sqlAdminPassword
     name: sqlAdminPassword
     required: true
     type: securestring
     description: Password of the SQL admin
+    
   - id: appUserPassword
     name: appUserPassword
     required: true
