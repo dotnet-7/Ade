@@ -85,14 +85,14 @@
     },
     "sqlAdminPassword": {
       "type": "securestring",
-      "defaultValue": "sqlAdminPassword1@",
+      "defaultValue": "Sqlpassword123@",
       "metadata": {
         "description": "SQL Server administrator password"
       }
     },
     "appUserPassword": {
       "type": "securestring",
-      "defaultValue": "appUserPassword1@",
+      "defaultValue": "Sqlpassword123@",
       "metadata": {
         "description": "Application user password"
       }
