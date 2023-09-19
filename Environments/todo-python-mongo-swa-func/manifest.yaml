@@ -14,16 +14,6 @@ parameters:
     description: Name of the environment
     
   - id: location
-    name: location
+    name: Location
     description: 'The location of the resources.'
     type: string
-    allowed:
-      - 'westus2'
-      - 'eastus2'
-      - 'centralus'
-      - 'westeurope'
-      - 'eastasia'
-      - 'eastasiastage'
-      - 'eastus2euap'
-      - 'centraluseuap'
-    default: 'westus2'
