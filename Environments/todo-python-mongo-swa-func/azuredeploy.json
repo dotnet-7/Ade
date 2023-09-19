@@ -26,7 +26,7 @@
         "centralus",
         "westeurope",
         "eastasiastage",
-        "eastus2euap"
+        "eastus2euap",
         "centraluseuap"
       ],
       "minLength": 1,
