@@ -78,7 +78,7 @@
     },
     "principalId": {
       "type": "string",
-      "defaultValue": "",
+      "defaultValue": "39f70d2a-b14a-4255-9ab4-feb4a5154dcf",
       "metadata": {
         "description": "Id of the user or app to assign application roles"
       }
@@ -1399,10 +1399,10 @@
                       "apiVersion": "2020-10-01",
                       "name": "[format('{0}-deployment-script', parameters('name'))]",
                       "location": "[parameters('location')]",
-                      "kind": "Bash",
+                      "kind": "AzureCLI",
                       "properties": {
                         "azCliVersion": "2.37.0",
-                        "retentionInterval": "PT10M",
+                        "retentionInterval": "PT1H",
                         "timeout": "PT5M",
                         "cleanupPreference": "OnExpiration",
                         "environmentVariables": [
