@@ -1402,9 +1402,9 @@
                       "kind": "AzureCLI",
                       "properties": {
                         "azCliVersion": "2.37.0",
-                        "retentionInterval": "PT1H",
+                        "retentionInterval": "PT10M",
                         "timeout": "PT5M",
-                        "cleanupPreference": "OnSuccess",
+                        "cleanupPreference": "OnExpiration",
                         "environmentVariables": [
                           {
                             "name": "APPUSERNAME",
@@ -1412,7 +1412,7 @@
                           },
                           {
                             "name": "APPUSERPASSWORD",
-                            "secureValue": "[parameters('appUserPassword')]"
+                            "value": "[parameters('appUserPassword')]"
                           },
                           {
                             "name": "DBNAME",
@@ -1424,7 +1424,7 @@
                           },
                           {
                             "name": "SQLCMDPASSWORD",
-                            "secureValue": "[parameters('sqlAdminPassword')]"
+                            "value": "[parameters('sqlAdminPassword')]"
                           },
                           {
                             "name": "SQLADMIN",
