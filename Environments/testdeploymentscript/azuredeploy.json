@@ -23,30 +23,15 @@
     {
       "type": "Microsoft.Resources/deploymentScripts",
       "apiVersion": "2020-10-01",
-      "name": "runPowerShellInlineWithOutput",
-      "location": "[resourceGroup().location]",
+      "name": "runPowerShell",
+      "location": "eastus2",
       "kind": "AzurePowerShell",
       "properties": {
-        "forceUpdateTag": "[parameters('utcValue')]",
         "azPowerShellVersion": "8.3",
-        "scriptContent": "
-          param([string] $name)
-          $output = \"Hello {0}\" -f $name
-          Write-Output $output
-          $DeploymentScriptOutputs = @{}
-          $DeploymentScriptOutputs['text'] = $output
-        ",
-        "arguments": "[concat('-name', ' ', parameters('name'))]",
         "timeout": "PT1H",
         "cleanupPreference": "OnSuccess",
-        "retentionInterval": "P1D"
+        "retentionInterval": "P1H"
       }
     }
-  ],
-  "outputs": {
-    "result": {
-      "value": "[reference('runPowerShellInlineWithOutput').outputs.text]",
-      "type": "string"
-    }
-  }
+  ]
 }
