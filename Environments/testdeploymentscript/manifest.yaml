@@ -7,8 +7,3 @@ runner: ARM
 templatePath: azuredeploy.json
 
 parameters:
-  - id: environmentName
-    name: environmentName
-    required: true
-    type: string
-    description: Name of the environment
