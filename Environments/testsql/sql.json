@@ -1,0 +1,257 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "environmentName": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64,
+            "metadata": {
+              "description": "Name of the the environment which is used to generate a short unique hash used in all resources."
+            }
+          },
+          "location": {
+            "type": "string",
+            "defaultValue": "[resourceGroup().location]",
+            "minLength": 1,
+            "metadata": {
+              "description": "Primary location for all resources"
+            }
+          },
+          "sqlAdminPassword": {
+            "type": "string",
+            "defaultValue": "Sqlpassword123@",
+            "metadata": {
+              "description": "SQL Server administrator password"
+            }
+          },
+          "appUserPassword": {
+            "type": "string",
+            "defaultValue": "Sqlpassword123@",
+            "metadata": {
+              "description": "Application user password"
+            }
+          }
+    },
+    "resources": [
+      {
+        "type": "Microsoft.Resources/deployments",
+        "apiVersion": "2022-09-01",
+        "name": "sql",
+        "properties": {
+          "expressionEvaluationOptions": {
+            "scope": "inner"
+          },
+          "mode": "Incremental",
+          "parameters": {
+            "name": "[if(not(empty(parameters('sqlServerName'))), createObject('value', parameters('sqlServerName')), createObject('value', format('{0}{1}', variables('abbrs').sqlServers, variables('resourceToken'))))]",
+            "databaseName": {
+              "value": "[parameters('sqlDatabaseName')]"
+            },
+            "location": {
+              "value": "[parameters('location')]"
+            },
+            "tags": {
+              "value": "[variables('tags')]"
+            },
+            "sqlAdminPassword": {
+              "value": "[parameters('sqlAdminPassword')]"
+            },
+            "appUserPassword": {
+              "value": "[parameters('appUserPassword')]"
+            },
+            "keyVaultName": {
+              "value": "[reference(resourceId('Microsoft.Resources/deployments', 'keyvault'), '2022-09-01').outputs.name.value]"
+            }
+          },
+          "template": {
+            "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+            "contentVersion": "1.0.0.0",
+            "metadata": {
+              "_generator": {
+                "name": "bicep",
+                "version": "0.21.1.54444",
+                "templateHash": "16404590218873588395"
+              }
+            },
+            "parameters": {
+              "name": {
+                "type": "string"
+              },
+              "location": {
+                "type": "string",
+                "defaultValue": "[resourceGroup().location]"
+              },
+              "tags": {
+                "type": "object",
+                "defaultValue": {}
+              },
+              "databaseName": {
+                "type": "string",
+                "defaultValue": ""
+              },
+              "keyVaultName": {
+                "type": "string"
+              },
+              "sqlAdminPassword": {
+                "type": "securestring"
+              },
+              "appUserPassword": {
+                "type": "securestring"
+              }
+            },
+            "variables": {
+              "defaultDatabaseName": "Todo",
+              "actualDatabaseName": "[if(not(empty(parameters('databaseName'))), parameters('databaseName'), variables('defaultDatabaseName'))]"
+            },
+            "resources": [
+              {
+                "type": "Microsoft.Resources/deployments",
+                "apiVersion": "2022-09-01",
+                "name": "sqlserver",
+                "properties": {
+                  "expressionEvaluationOptions": {
+                    "scope": "inner"
+                  },
+                  "mode": "Incremental",
+                  "parameters": {
+                    "name": {
+                      "value": "[parameters('name')]"
+                    },
+                    "location": {
+                      "value": "[parameters('location')]"
+                    },
+                    "tags": {
+                      "value": "[parameters('tags')]"
+                    },
+                    "databaseName": {
+                      "value": "[variables('actualDatabaseName')]"
+                    },
+                    "keyVaultName": {
+                      "value": "[parameters('keyVaultName')]"
+                    },
+                    "sqlAdminPassword": {
+                      "value": "[parameters('sqlAdminPassword')]"
+                    },
+                    "appUserPassword": {
+                      "value": "[parameters('appUserPassword')]"
+                    }
+                  },
+                  "template": {
+                    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+                    "contentVersion": "1.0.0.0",
+                    "metadata": {
+                      "_generator": {
+                        "name": "bicep",
+                        "version": "0.21.1.54444",
+                        "templateHash": "15394765471286229067"
+                      },
+                      "description": "Creates an Azure SQL Server instance."
+                    },
+                    "parameters": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "location": {
+                        "type": "string",
+                        "defaultValue": "[resourceGroup().location]"
+                      },
+                      "tags": {
+                        "type": "object",
+                        "defaultValue": {}
+                      },
+                      "appUser": {
+                        "type": "string",
+                        "defaultValue": "appUser"
+                      },
+                      "databaseName": {
+                        "type": "string"
+                      },
+                      "keyVaultName": {
+                        "type": "string"
+                      },
+                      "sqlAdmin": {
+                        "type": "string",
+                        "defaultValue": "sqlAdmin"
+                      },
+                      "connectionStringKey": {
+                        "type": "string",
+                        "defaultValue": "AZURE-SQL-CONNECTION-STRING"
+                      },
+                      "sqlAdminPassword": {
+                        "type": "securestring"
+                      },
+                      "appUserPassword": {
+                        "type": "securestring"
+                      }
+                    },
+                    "resources": [
+                      {
+                        "type": "Microsoft.Sql/servers/databases",
+                        "apiVersion": "2022-05-01-preview",
+                        "name": "[format('{0}/{1}', parameters('name'), parameters('databaseName'))]",
+                        "location": "[parameters('location')]",
+                        "dependsOn": [
+                          "[resourceId('Microsoft.Sql/servers', parameters('name'))]"
+                        ]
+                      },
+                      {
+                        "type": "Microsoft.Sql/servers/firewallRules",
+                        "apiVersion": "2022-05-01-preview",
+                        "name": "[format('{0}/{1}', parameters('name'), 'Azure Services')]",
+                        "properties": {
+                          "startIpAddress": "0.0.0.1",
+                          "endIpAddress": "255.255.255.254"
+                        },
+                        "dependsOn": [
+                          "[resourceId('Microsoft.Sql/servers', parameters('name'))]"
+                        ]
+                      },
+                      {
+                        "type": "Microsoft.Sql/servers",
+                        "apiVersion": "2022-05-01-preview",
+                        "name": "[parameters('name')]",
+                        "location": "[parameters('location')]",
+                        "tags": "[parameters('tags')]",
+                        "properties": {
+                          "version": "12.0",
+                          "minimalTlsVersion": "1.2",
+                          "publicNetworkAccess": "Enabled",
+                          "administratorLogin": "[parameters('sqlAdmin')]",
+                          "administratorLoginPassword": "[parameters('sqlAdminPassword')]"
+                        }
+                      }
+                    ],
+                    "outputs": {
+                      "connectionStringKey": {
+                        "type": "string",
+                        "value": "[parameters('connectionStringKey')]"
+                      },
+                      "databaseName": {
+                        "type": "string",
+                        "value": "[parameters('databaseName')]"
+                      }
+                    }
+                  }
+                }
+              }
+            ],
+            "outputs": {
+              "connectionStringKey": {
+                "type": "string",
+                "value": "[reference(resourceId('Microsoft.Resources/deployments', 'sqlserver'), '2022-09-01').outputs.connectionStringKey.value]"
+              },
+              "databaseName": {
+                "type": "string",
+                "value": "[reference(resourceId('Microsoft.Resources/deployments', 'sqlserver'), '2022-09-01').outputs.databaseName.value]"
+              }
+            }
+          }
+        },
+        "dependsOn": [
+          "[resourceId('Microsoft.Resources/deployments', 'keyvault')]"
+        ]
+      }
+            
+    ]
+}
