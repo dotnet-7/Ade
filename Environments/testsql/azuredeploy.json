@@ -428,6 +428,34 @@
                           "administratorLogin": "[parameters('sqlAdmin')]",
                           "administratorLoginPassword": "[parameters('sqlAdminPassword')]"
                         }
+                      },
+                      {
+                        "type": "Microsoft.KeyVault/vaults/secrets",
+                        "apiVersion": "2022-07-01",
+                        "name": "[format('{0}/{1}', parameters('keyVaultName'), 'sqlAdminPassword')]",
+                        "properties": {
+                          "value": "[parameters('sqlAdminPassword')]"
+                        }
+                      },
+                      {
+                        "type": "Microsoft.KeyVault/vaults/secrets",
+                        "apiVersion": "2022-07-01",
+                        "name": "[format('{0}/{1}', parameters('keyVaultName'), 'appUserPassword')]",
+                        "properties": {
+                          "value": "[parameters('appUserPassword')]"
+                        }
+                      },
+                      {
+                        "type": "Microsoft.KeyVault/vaults/secrets",
+                        "apiVersion": "2022-07-01",
+                        "name": "[format('{0}/{1}', parameters('keyVaultName'), parameters('connectionStringKey'))]",
+                        "properties": {
+                          "value": "[format('{0}; Password={1}', format('Server={0}; Database={1}; User={2}', reference(resourceId('Microsoft.Sql/servers', parameters('name')), '2022-05-01-preview').fullyQualifiedDomainName, parameters('databaseName'), parameters('appUser')), parameters('appUserPassword'))]"
+                        },
+                        "dependsOn": [
+                          "[resourceId('Microsoft.Sql/servers/databases', parameters('name'), parameters('databaseName'))]",
+                          "[resourceId('Microsoft.Sql/servers', parameters('name'))]"
+                        ]
                       }
                     ],
                     "outputs": {
