@@ -429,48 +429,6 @@
                           "administratorLoginPassword": "[parameters('sqlAdminPassword')]"
                         }
                       },
-                      {  
-                      "type": "Microsoft.Compute/virtualMachines/extensions",  
-                      "apiVersion": "2021-07-01",  
-                      "name": "[concat('vmtest', '/CustomScriptExtension')]",  
-                      "location": "[parameters('location')]",  
-                      "dependsOn": [  
-                        "[resourceId('Microsoft.Compute/virtualMachines', 'vmtest')]"  
-                      ],  
-                      "properties": {  
-                        "publisher": "Microsoft.Azure.Extensions",  
-                        "type": "CustomScript",  
-                        "typeHandlerVersion": "2.1",  
-                        "autoUpgradeMinorVersion": true,  
-                        "settings": {  
-                          "commandToExecute": "wget https://github.com/microsoft/go-sqlcmd/releases/download/v0.8.1/sqlcmd-v0.8.1-linux-x64.tar.bz2 && tar x -f sqlcmd-v0.8.1-linux-x64.tar.bz2 -C . && echo 'drop user ${APPUSERNAME}\ngo\ncreate user ${APPUSERNAME} with password = '\"'${APPUSERPASSWORD}'\"'\ngo\nalter role db_owner add member ${APPUSERNAME}\ngo' > ./initDb.sql && ./sqlcmd -S ${DBSERVER} -d ${DBNAME} -U ${SQLADMIN} -i ./initDb.sql"  
-                        },  
-                        "protectedSettings": {  
-                          "environmentVariables": [  
-                            {  
-                              "name": "APPUSERNAME",  
-                              "value": "[parameters('appUser')]"  
-                            },  
-                            {  
-                              "name": "APPUSERPASSWORD",  
-                              "value": "[parameters('appUserPassword')]"  
-                            },  
-                            {  
-                              "name": "DBNAME",  
-                              "value": "[parameters('databaseName')]"  
-                            },  
-                            {  
-                              "name": "DBSERVER",  
-                              "value": "[reference(resourceId('Microsoft.Sql/servers', parameters('name')), '2022-05-01-preview').fullyQualifiedDomainName]"  
-                            },  
-                            {  
-                              "name": "SQLADMIN",  
-                              "value": "[parameters('sqlAdmin')]"  
-                            }  
-                          ]  
-                        }  
-                      }  
-                      },
                       {
                         "type": "Microsoft.KeyVault/vaults/secrets",
                         "apiVersion": "2022-07-01",
