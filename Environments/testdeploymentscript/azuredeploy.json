@@ -3,11 +3,12 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
       "environmentName": {
-      "type": "string",
-      "minLength": 1,
-      "maxLength": 64,
-      "metadata": {
-        "description": "Name of the the environment which is used to generate a short unique hash used in all resources."
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 64,
+        "metadata": {
+          "description": "Name of the the environment which is used to generate a short unique hash used in all resources."
+        }
       }
   },
   "resources": [
