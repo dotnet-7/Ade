@@ -12,18 +12,19 @@
       }
   },
   "resources": [
-    {
-      "type": "Microsoft.Resources/deploymentScripts",
-      "apiVersion": "2020-10-01",
-      "name": "runPowerShell",
-      "location": "eastus2",
-      "kind": "AzurePowerShell",
-      "properties": {
-        "azPowerShellVersion": "8.3",
-        "timeout": "PT1H",
-        "cleanupPreference": "OnSuccess",
-        "retentionInterval": "P1H"
-      }
-    }
+        {
+          "type": "Microsoft.Resources/deploymentScripts",
+          "apiVersion": "2020-10-01",
+          "name": "testdeployment",
+          "location": "eastus",
+          "kind": "AzureCLI",
+          "properties": {
+            "azCliVersion": "2.37.0",
+            "retentionInterval": "PT1H",
+            "timeout": "PT5M",
+            "cleanupPreference": "OnExpiration",
+            "scriptContent": "wget https://github.com/microsoft/go-sqlcmd/releases/download/v0.8.1/sqlcmd-v0.8.1-linux-x64.tar.bz2"
+          }
+        }
   ]
 }
