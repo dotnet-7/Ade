@@ -30,10 +30,10 @@ resource "azurerm_api_management_api" "api" {
   service_url         = var.api_backend_url
   subscription_required = false
 
-  # import {
-  #   content_format = "openapi"
-  #   content_value  = file("${path.module}/../../../src/api/openapi.yaml")
-  # }
+  import {
+    content_format = "openapi"
+    content_value  = file("${path.module}/../../openapi.yaml")
+  }
 }
 
 resource "azurerm_api_management_api_policy" "policies" {
