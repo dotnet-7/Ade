@@ -709,8 +709,8 @@
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2022-09-01",
       "name": "api",
-            "properties": {
-        "expressionEvaluationOptions": {
+          "properties": {
+          "expressionEvaluationOptions": {
           "scope": "inner"
         },
         "mode": "Incremental",
@@ -749,6 +749,9 @@
               "AZURE_COSMOS_ENDPOINT": "[reference(resourceId('Microsoft.Resources/deployments', 'cosmos'), '2022-09-01').outputs.endpoint.value]",
               "API_ALLOW_ORIGINS": "[reference(resourceId('Microsoft.Resources/deployments', 'web'), '2022-09-01').outputs.SERVICE_WEB_URI.value]"
             }
+          },
+          "appcommandline": {
+            "value": "[if(equals(variables('runtimeName'), 'python'), 'gunicorn --workers 4 --threads 2 --timeout 60 --access-logfile \"-\" --error-logfile \"-\" --bind=0.0.0.0:8000 -k uvicorn.workers.UvicornWorker todo.app:app', '')]"
           }
         },
         "template": {
