@@ -19,3 +19,7 @@ parameters:
     allowed:
       - "node"
       - "python"
+  - id: Location
+    name: location
+    type: string
+    description: Location for all resources
