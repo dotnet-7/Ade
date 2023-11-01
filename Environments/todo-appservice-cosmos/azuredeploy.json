@@ -36,18 +36,6 @@
       },
       "minLength": 1
     },
-    // "runtimeName": {
-    //   "type": "string",
-    //   "allowedValues": [
-    //     "java",
-    //     "node",
-    //     "python",
-    //     "dotnetcore"
-    //   ],
-    //   "metadata": {
-    //     "description": "The language worker runtime to load in the function app"
-    //   }
-    // },
     "apiServiceName": {
       "type": "string",
       "defaultValue": ""
