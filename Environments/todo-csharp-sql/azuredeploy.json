@@ -1395,6 +1395,49 @@
                       }
                     },
                     {
+                      "type": "Microsoft.Resources/deploymentScripts",
+                      "apiVersion": "2020-10-01",
+                      "name": "[format('{0}-deployment-script', parameters('name'))]",
+                      "location": "[parameters('location')]",
+                      "kind": "AzureCLI",
+                      "properties": {
+                        "azCliVersion": "2.37.0",
+                        "retentionInterval": "PT1H",
+                        "timeout": "PT5M",
+                        "cleanupPreference": "OnExpiration",
+                        "environmentVariables": [
+                          {
+                            "name": "APPUSERNAME",
+                            "value": "[parameters('appUser')]"
+                          },
+                          {
+                            "name": "APPUSERPASSWORD",
+                            "value": "[parameters('appUserPassword')]"
+                          },
+                          {
+                            "name": "DBNAME",
+                            "value": "[parameters('databaseName')]"
+                          },
+                          {
+                            "name": "DBSERVER",
+                            "value": "[reference(resourceId('Microsoft.Sql/servers', parameters('name')), '2022-05-01-preview').fullyQualifiedDomainName]"
+                          },
+                          {
+                            "name": "SQLCMDPASSWORD",
+                            "value": "[parameters('sqlAdminPassword')]"
+                          },
+                          {
+                            "name": "SQLADMIN",
+                            "value": "[parameters('sqlAdmin')]"
+                          }
+                        ],
+                        "scriptContent": "wget https://github.com/microsoft/go-sqlcmd/releases/download/v0.8.1/sqlcmd-v0.8.1-linux-x64.tar.bz2\ntar x -f sqlcmd-v0.8.1-linux-x64.tar.bz2 -C .\n\ncat <<SCRIPT_END > ./initDb.sql\ndrop user ${APPUSERNAME}\ngo\ncreate user ${APPUSERNAME} with password = '${APPUSERPASSWORD}'\ngo\nalter role db_owner add member ${APPUSERNAME}\ngo\nSCRIPT_END\n\n./sqlcmd -S ${DBSERVER} -d ${DBNAME} -U ${SQLADMIN} -i ./initDb.sql\n    "
+                      },
+                      "dependsOn": [
+                        "[resourceId('Microsoft.Sql/servers', parameters('name'))]"
+                      ]
+                    },
+                    {
                       "type": "Microsoft.KeyVault/vaults/secrets",
                       "apiVersion": "2022-07-01",
                       "name": "[format('{0}/{1}', parameters('keyVaultName'), 'sqlAdminPassword')]",
