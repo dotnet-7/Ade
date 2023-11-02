@@ -12,3 +12,8 @@ parameters:
     required: true
     type: string
     description: Name of the environment
+  - id: location
+    name: Location
+    description: 'Location for all resources.'
+    type: string
+    required: true
