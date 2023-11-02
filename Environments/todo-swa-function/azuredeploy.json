@@ -236,7 +236,7 @@
       "azd-env-name": "[parameters('environmentName')]"
     },
     "runtimeVersion": "[if(equals(parameters('repoUrl'), 'https://github.com/azure-samples/todo-python-mongo-swa-func'), '3.10','18')]",
-    "runtimeName": "[if(equals(parameters('repoUrl'), 'https://github.com/azure-samples/todo-python-mongo-swa-func'), 'python','node')]"
+    "runtimeName":"[if(equals(parameters('repoUrl'), 'https://github.com/azure-samples/todo-python-mongo-swa-func'), 'python','node')]"
   },
   "resources": [
     {
@@ -411,10 +411,10 @@
             ]
           },
           "runtimeName": {
-            "value": "node"
+            "value": "[variables('runtimeName')]"
           },
           "runtimeVersion": {
-            "value": "18"
+            "value": "[variables('runtimeVersion')]"
           },
           "appSettings": {
             "value": {
@@ -518,10 +518,10 @@
                     "value": "[parameters('keyVaultName')]"
                   },
                   "runtimeName": {
-                    "value": "[parameters('runtimeName')]"
+                    "value": "node"
                   },
                   "runtimeVersion": {
-                    "value": "[parameters('runtimeVersion')]"
+                    "value": "18"
                   },
                   "storageAccountName": {
                     "value": "[parameters('storageAccountName')]"
