@@ -235,15 +235,15 @@
     "tags": {
       "azd-env-name": "[parameters('environmentName')]"
     },
-    "runtimeVersion":"[if(equals(parameters('repoUrl'), 'https://github.com/azure-samples/todo-python-mongo-swa-func'), '3.10','18')]",
-    "runtimeName":"[if(equals(parameters('repoUrl'), 'https://github.com/azure-samples/todo-python-mongo-swa-func'), 'python','node')]"
+    "runtimeVersion": "[if(equals(parameters('repoUrl'), 'https://github.com/azure-samples/todo-python-mongo-swa-func'), '3.10','18')]",
+    "runtimeName": "[if(equals(parameters('repoUrl'), 'https://github.com/azure-samples/todo-python-mongo-swa-func'), 'python','node')]"
   },
   "resources": [
-        {
+    {
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2022-09-01",
       "name": "web",
-            "properties": {
+      "properties": {
         "expressionEvaluationOptions": {
           "scope": "inner"
         },
@@ -411,10 +411,10 @@
             ]
           },
           "runtimeName": {
-            "value": "[variables('runtimeName')]"
+            "value": "node"
           },
           "runtimeVersion": {
-            "value": "[variables('runtimeVersion')]"
+            "value": "18"
           },
           "appSettings": {
             "value": {
