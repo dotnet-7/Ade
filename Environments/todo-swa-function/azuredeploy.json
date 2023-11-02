@@ -25,14 +25,14 @@
         "description": "Primary location for all resources"
       }
     },
-    "runtimeName": {
+    "repoUrl": {
       "type": "string",
       "allowedValues": [
-        "node",
-        "python"
+          "https://github.com/azure-samples/todo-nodejs-mongo-swa-func",
+          "https://github.com/azure-samples/todo-python-mongo-swa-func"
       ],
       "metadata": {
-        "description": "The language worker runtime to load in the function app"
+        "description": "URL of the GitHub repository containing the application code"
       }
     },
     "apiServiceName": {
@@ -236,7 +236,8 @@
     "tags": {
       "azd-env-name": "[parameters('environmentName')]"
     },
-    "runtimeVersion":"[if(equals(parameters('runtimeName'), 'python'), '3.10','18-lts')]"
+    "runtimeVersion":"[if(equals(parameters('repoUrl'), 'https://github.com/azure-samples/todo-python-mongo-swa-func'), '3.10','18-lts')]",
+    "runtimeName":"[if(equals(parameters('repoUrl'), 'https://github.com/azure-samples/todo-python-mongo-swa-func'), 'python','18-lts')]",
   },
   "resources": [
         {
@@ -411,7 +412,7 @@
             ]
           },
           "runtimeName": {
-            "value": "[parameters('runtimeName')]"
+            "value": "[variables('runtimeName')]"
           },
           "runtimeVersion": {
             "value": "[variables('runtimeVersion')]"
