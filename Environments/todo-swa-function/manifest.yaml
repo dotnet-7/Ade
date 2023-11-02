@@ -12,14 +12,14 @@ parameters:
     required: true
     type: string
     description: Name of the environment
-  - id: runtimeName
-    name: runtimeName
-    type: string
-    description: Runtime for the function app
-    allowed:
-      - "node"
-      - "python"
   - id: location
     name: Location
     type: string
     description: Location for all resources
+  - id: repoUrl
+    name: repoUrl
+    type: string
+    description: Path the the application source code
+    allowed:
+      - "https://github.com/azure-samples/todo-nodejs-mongo-swa-func"
+      - "https://github.com/azure-samples/todo-python-mongo-swa-func"
