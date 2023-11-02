@@ -518,10 +518,10 @@
                     "value": "[parameters('keyVaultName')]"
                   },
                   "runtimeName": {
-                    "value": "node"
+                    "value": "[parameters('runtimeName')]"
                   },
                   "runtimeVersion": {
-                    "value": "18"
+                    "value": "[parameters('runtimeVersion')]"
                   },
                   "storageAccountName": {
                     "value": "[parameters('storageAccountName')]"
