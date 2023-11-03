@@ -44,6 +44,7 @@ resource "azurerm_key_vault_access_policy" "app" {
     "Set",
     "List",
     "Delete",
+    "Purge"
   ]
 }
 
