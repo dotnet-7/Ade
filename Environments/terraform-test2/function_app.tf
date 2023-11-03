@@ -29,7 +29,7 @@ variable "environment_name" {
 module "service_plan" {
   source = "github.com/Azure/azure-data-labs-modules/terraform/service-plan"
 
-  basename                 = "senyangtestkv"
+  basename                 = "senyangsp"
   resource_group_name      = var.environment_name
   location                 = var.location
 }

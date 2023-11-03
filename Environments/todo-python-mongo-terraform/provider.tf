@@ -3,6 +3,12 @@
 # Configure the Azure Provider
 terraform {
   required_version = ">= 1.1.7, < 2.0.0"
+  backend "azurerm" {
+    resource_group_name  = "senyangtfstate"
+    storage_account_name = "tfstate219727200"
+    container_name       = "tfstate"
+    key                  = "terraform.tfstate"
+  }
   required_providers {
     azurerm = {
       version = "~>3.47.0"

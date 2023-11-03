@@ -1,5 +1,5 @@
-name: FunctionAppName
-summary: Creates a function app
+name: Todo-python-mongo-terraform
+summary: Creates a python mongo app
 description: Deploys an environment using Terraform containing a Function App
 runner: Terraform
 templatePath: main.tf
