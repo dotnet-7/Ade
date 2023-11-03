@@ -32,17 +32,4 @@ module "key_vault" {
   basename                 = "senyangtestkv"
   resource_group_name      = var.environment_name
   location                 = var.location
-  sku_name                 = "premium"
-  purge_protection_enabled = false
-
-  subnet_id            = null
-  private_dns_zone_ids = null
-
-  is_private_endpoint = false
-
-  tags = {
-    Owner       = "Azure Data Labs"
-    Project     = "Azure Data Labs"
-    Environment = "dev"
-  }
 }
