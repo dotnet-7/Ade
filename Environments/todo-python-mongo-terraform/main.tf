@@ -7,10 +7,6 @@ locals {
 }
 
 
-variable "resource_group_name" {}
-
-variable "location" {}
-
 data "azurerm_resource_group" "rg" {
   name = var.environment_name
 }
