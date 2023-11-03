@@ -13,7 +13,6 @@ variable "location" {}
 
 data "azurerm_resource_group" "rg" {
   name = var.environment_name
-  tags = { azd-env-name : var.environment_name }
 }
 
 # ------------------------------------------------------------------------------------------------------
