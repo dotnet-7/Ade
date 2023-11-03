@@ -26,8 +26,8 @@ variable "environment_name" {
   type        = string
 }
 
-module "key_vault" {
-  source = "github.com/Azure/azure-data-labs-modules/terraform/key-vault"
+module "service_plan" {
+  source = "github.com/Azure/azure-data-labs-modules/terraform/service-plan"
 
   basename                 = "senyangtestkv"
   resource_group_name      = var.environment_name
