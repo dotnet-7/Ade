@@ -4,11 +4,22 @@ description: Deploys an environment using Terraform containing a Function App
 runner: Terraform
 templatePath: main.tf
 parameters: 
-- id: "environment_name"
-  name: "Environment Name"
-  required: true
-  type: "string"
-- id: "location"
-  name: "Location"
-  required: true
-  type: "string"
+  - id: "environment_name"
+    name: "Environment Name"
+    required: true
+    type: "string"
+  - id: "location"
+    name: "Location"
+    type: "string"
+  - id: "principal_id"
+    name: "Principal Id"
+    type: "string"
+  - id: "environment_principal_id"
+    name: "Environment Principal Id"
+    type: "string"
+  - id: "repoUrl"
+    name: "Repo Url"
+    type: "string"
+    allowed:
+      - "https://github.com/azure-samples/todo-nodejs-mongo-terraform"
+      - "https://github.com/azure-samples/todo-python-mongo-terraform"

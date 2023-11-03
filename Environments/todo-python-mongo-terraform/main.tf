@@ -3,6 +3,7 @@ locals {
   sha                          = base64encode(sha256("${var.environment_name}${var.location}${data.azurerm_client_config.current.subscription_id}"))
   resource_token               = substr(replace(lower(local.sha), "[^A-Za-z0-9_]", ""), 0, 13)
   cosmos_connection_string_key = "AZURE-COSMOS-CONNECTION-STRING"
+  apiSource                    = "./modules/appservice" + replace(replace(var.repoUrl,"https://github.com/Azure-Samples/todo-",""),"-mongo-terraform","")
 }
 # ------------------------------------------------------------------------------------------------------
 # Deploy resource Group
@@ -60,7 +61,7 @@ module "keyvault" {
   rg_name                  = data.azurerm_resource_group.rg.name
   tags                     = local.tags
   resource_token           = local.resource_token
-  access_policy_object_ids = [module.api.IDENTITY_PRINCIPAL_ID,"a103690e-1bb3-4647-9c64-541a5b2b7fef"]
+  access_policy_object_ids = [module.api.IDENTITY_PRINCIPAL_ID,var.environment_principal_id]
   secrets = [
     {
       name  = local.cosmos_connection_string_key
@@ -117,7 +118,7 @@ module "web" {
 # Deploy app service api
 # ------------------------------------------------------------------------------------------------------
 module "api" {
-  source         = "./modules/appservicenode"
+  source         = local.apiSource
   location       = var.location
   rg_name        = data.azurerm_resource_group.rg.name
   resource_token = local.resource_token
