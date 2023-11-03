@@ -235,7 +235,7 @@
     "tags": {
       "azd-env-name": "[parameters('environmentName')]"
     },
-    "runtimeVersion": "[if(equals(parameters('repoUrl'), 'https://github.com/azure-samples/todo-python-mongo-swa-func'), '3.10','18')]",
+    "runtimeVersion": "[if(equals(parameters('repoUrl'), 'https://github.com/azure-samples/todo-python-mongo-swa-func'), '3.8','18')]",
     "runtimeName": "[if(equals(parameters('repoUrl'), 'https://github.com/azure-samples/todo-python-mongo-swa-func'), 'python','node')]"
   },
   "resources": [

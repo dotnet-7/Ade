@@ -240,7 +240,7 @@
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2022-09-01",
       "name": "web",
-            "properties": {
+      "properties": {
         "expressionEvaluationOptions": {
           "scope": "inner"
         },
@@ -635,7 +635,7 @@
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2022-09-01",
       "name": "web-appsettings",
-            "properties": {
+      "properties": {
         "expressionEvaluationOptions": {
           "scope": "inner"
         },
@@ -1162,7 +1162,7 @@
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2022-09-01",
       "name": "api-keyvault-access",
-            "properties": {
+      "properties": {
         "expressionEvaluationOptions": {
           "scope": "inner"
         },
@@ -1234,7 +1234,7 @@
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2022-09-01",
       "name": "cosmos",
-            "properties": {
+      "properties": {
         "expressionEvaluationOptions": {
           "scope": "inner"
         },
@@ -1667,7 +1667,7 @@
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2022-09-01",
       "name": "appserviceplan",
-            "properties": {
+      "properties": {
         "expressionEvaluationOptions": {
           "scope": "inner"
         },
@@ -1752,7 +1752,7 @@
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2022-09-01",
       "name": "keyvault",
-            "properties": {
+      "properties": {
         "expressionEvaluationOptions": {
           "scope": "inner"
         },
@@ -1831,7 +1831,7 @@
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2022-09-01",
       "name": "monitoring",
-            "properties": {
+      "properties": {
         "expressionEvaluationOptions": {
           "scope": "inner"
         },
@@ -3348,7 +3348,7 @@
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2022-09-01",
       "name": "apim-deployment",
-            "properties": {
+      "properties": {
         "expressionEvaluationOptions": {
           "scope": "inner"
         },
