@@ -11,7 +11,7 @@ variable "environment_name" {
 variable "principal_id" {
   description = "The Id of the azd service principal to add to deployed keyvault access policies"
   type        = string
-  default     = ""
+  default     = "c7e6a96f-344b-4cd7-b814-a3f679ce75b0"
 }
 
 variable "useAPIM" {
