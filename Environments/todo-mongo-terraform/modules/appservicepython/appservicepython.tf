@@ -10,6 +10,8 @@ terraform {
     }
   }
 }
+
+
 # ------------------------------------------------------------------------------------------------------
 # Deploy app service web app
 # ------------------------------------------------------------------------------------------------------
@@ -34,6 +36,7 @@ resource "azurerm_linux_web_app" "web" {
     ftps_state        = "FtpsOnly"
     app_command_line  = var.app_command_line
     application_stack {
+      node_version = "18-lts"
       python_version = var.python_version
     }
     health_check_path = var.health_check_path
