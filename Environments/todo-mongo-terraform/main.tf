@@ -64,7 +64,7 @@ module "keyvault" {
   rg_name                  = data.azurerm_resource_group.rg.name
   tags                     = local.tags
   resource_token           = local.resource_token
-  access_policy_object_ids = [module.api.IDENTITY_PRINCIPAL_ID,var.environment_principal_id]
+  access_policy_object_ids = [locals.runtimeName == "nodejs" ? module.api_node.IDENTITY_PRINCIPAL_ID:module.api_python.IDENTITY_PRINCIPAL_ID,var.environment_principal_id]
   secrets = [
     {
       name  = local.cosmos_connection_string_key
@@ -120,7 +120,7 @@ module "web" {
 # ------------------------------------------------------------------------------------------------------
 # Deploy app service api
 # ------------------------------------------------------------------------------------------------------
-module "api" {
+module "api_node" {
   count          = locals.runtimeName == "nodejs" ? 1 : 0
   source         = "./modules/appservicenode"
   location       = var.location
@@ -145,7 +145,7 @@ module "api" {
     type = "SystemAssigned"
   }]
 }
-module "api" {
+module "api_python" {
   count          = locals.runtimeName == "python" ? 1 : 0
   source         = "./modules/appservicepython"
   location       = var.location
@@ -198,5 +198,5 @@ module "apimApi" {
   api_name                 = "todo-api"
   api_display_name         = "Simple Todo API"
   api_path                 = "todo"
-  api_backend_url          = module.api.URI
+  api_backend_url          = locals.runtimeName == "nodejs" ? module.api_node.URI : module.api_python.URI
 }
