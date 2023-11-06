@@ -9,6 +9,11 @@ locals {
 # Deploy resource Group
 # ------------------------------------------------------------------------------------------------------
 variable "resource_group_name" {}
+variable "is_python" {
+  type        = bool
+  default     = local.runtimeName == "python"
+}
+
 
 data "azurerm_resource_group" "rg" {
   name = var.resource_group_name
@@ -61,7 +66,7 @@ module "keyvault" {
   rg_name                  = data.azurerm_resource_group.rg.name
   tags                     = local.tags
   resource_token           = local.resource_token
-  access_policy_object_ids = [locals.runtimeName == "nodejs" ? module.api_node.IDENTITY_PRINCIPAL_ID:module.api_python.IDENTITY_PRINCIPAL_ID,var.environment_principal_id]
+  access_policy_object_ids = [var.is_python ? module.api_python.IDENTITY_PRINCIPAL_ID:module.api_node.IDENTITY_PRINCIPAL_ID,var.environment_principal_id]
   secrets = [
     {
       name  = local.cosmos_connection_string_key
@@ -118,7 +123,7 @@ module "web" {
 # Deploy app service api
 # ------------------------------------------------------------------------------------------------------
 module "api_node" {
-  count          = locals.runtimeName == "nodejs" ? 1 : 0
+  count          = !var.is_python ? 1 : 0
   source         = "./modules/appservicenode"
   location       = var.location
   rg_name        = data.azurerm_resource_group.rg.name
@@ -143,7 +148,7 @@ module "api_node" {
   }]
 }
 module "api_python" {
-  count          = locals.runtimeName == "python" ? 1 : 0
+  count          = var.is_python ? 1 : 0
   source         = "./modules/appservicepython"
   location       = var.location
   rg_name        = data.azurerm_resource_group.rg.name
@@ -195,5 +200,5 @@ module "apimApi" {
   api_name                 = "todo-api"
   api_display_name         = "Simple Todo API"
   api_path                 = "todo"
-  api_backend_url          = locals.runtimeName == "nodejs" ? module.api_node.URI : module.api_python.URI
+  api_backend_url          = var.is_python ? module.api_python.URI : module.api_node.URI
 }
