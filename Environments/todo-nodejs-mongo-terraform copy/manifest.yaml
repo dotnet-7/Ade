@@ -1,0 +1,19 @@
+name: Todo-nodejs-mongo-terraform
+summary: Creates a nodejs mongo app
+description: Deploys an environment using Terraform containing a Function App
+runner: Terraform
+templatePath: main.tf
+parameters: 
+  - id: "environment_name"
+    name: "Environment Name"
+    required: true
+    type: "string"
+  - id: "location"
+    name: "Location"
+    type: "string"
+  - id: "principal_id"
+    name: "Principal Id"
+    type: "string"
+  - id: "environment_principal_id"
+    name: "Environment Principal Id"
+    type: "string"
