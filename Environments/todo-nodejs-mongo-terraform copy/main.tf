@@ -8,10 +8,7 @@ locals {
 # Deploy resource Group
 # ------------------------------------------------------------------------------------------------------
 variable "resource_group_name" {}
-variable "apiSource" {
-  type        = string
-  default = local.apiSource
-}
+
 data "azurerm_resource_group" "rg" {
   name = var.resource_group_name
 }

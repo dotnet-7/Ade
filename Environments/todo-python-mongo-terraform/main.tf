@@ -8,10 +8,7 @@ locals {
 # Deploy resource Group
 # ------------------------------------------------------------------------------------------------------
 variable "resource_group_name" {}
-variable "apiSource" {
-  type        = string
-  default = local.apiSource
-}
+
 data "azurerm_resource_group" "rg" {
   name = var.resource_group_name
 }
@@ -120,7 +117,7 @@ module "web" {
 # Deploy app service api
 # ------------------------------------------------------------------------------------------------------
 module "api" {
-  source         = var.apiSource
+  source         = "./modules/appservicepython"
   location       = var.location
   rg_name        = data.azurerm_resource_group.rg.name
   resource_token = local.resource_token

@@ -17,9 +17,3 @@ parameters:
   - id: "environment_principal_id"
     name: "Environment Principal Id"
     type: "string"
-  - id: "repoUrl"
-    name: "Repo Url"
-    type: "string"
-    allowed:
-      - "https://github.com/azure-samples/todo-nodejs-mongo-terraform"
-      - "https://github.com/azure-samples/todo-python-mongo-terraform"
