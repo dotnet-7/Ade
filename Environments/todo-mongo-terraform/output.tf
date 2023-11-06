@@ -16,7 +16,7 @@ output "REACT_APP_WEB_BASE_URL" {
 }
 
 output "REACT_APP_API_BASE_URL" {
-  value = var.useAPIM ? module.apimApi[0].SERVICE_API_URI : (var.is_python ? module.api_python.URI : module.api_node.URI)
+  value = var.useAPIM ? module.apimApi[0].SERVICE_API_URI : (locals.runtimeName == "nodejs" ? module.api_node.URI : module.api_python.URI)
 }
 
 output "AZURE_LOCATION" {
@@ -38,5 +38,5 @@ output "USE_APIM" {
 }
 
 output "SERVICE_API_ENDPOINTS" {
-  value = var.useAPIM ? [ module.apimApi[0].SERVICE_API_URI, var.is_python ? module.api_python.URI : module.api_node.URI ] : [] 
+  value = var.useAPIM ? [ module.apimApi[0].SERVICE_API_URI, locals.runtimeName == "nodejs" ? module.api_node.URI : module.api_python.URI ] : [] 
 }
