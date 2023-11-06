@@ -28,7 +28,3 @@ variable "repoUrl" {
   description = "Value of the repoUrl variable."
   type        = string
 }
-
-variable "backendUrl" {
-  
-}
