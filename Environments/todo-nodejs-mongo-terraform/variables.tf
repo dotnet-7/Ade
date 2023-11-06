@@ -23,8 +23,3 @@ variable "useAPIM" {
   type        = bool
   default     = false
 }
-
-variable "repoUrl" {
-  description = "Value of the repoUrl variable."
-  type        = string
-}

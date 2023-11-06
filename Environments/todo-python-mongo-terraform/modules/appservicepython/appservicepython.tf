@@ -35,7 +35,6 @@ resource "azurerm_linux_web_app" "web" {
     app_command_line  = var.app_command_line
     application_stack {
       python_version = var.python_version
-      node_version = ""
     }
     health_check_path = var.health_check_path
   }
