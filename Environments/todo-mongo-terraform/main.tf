@@ -63,7 +63,7 @@ module "keyvault" {
   rg_name                  = data.azurerm_resource_group.rg.name
   tags                     = local.tags
   resource_token           = local.resource_token
-  access_policy_object_ids = [local.runtimeName == "nodejs" ? module.api_node.IDENTITY_PRINCIPAL_ID:module.api_python.IDENTITY_PRINCIPAL_ID,var.environment_principal_id]
+  access_policy_object_ids = [local.runtimeName == "nodejs" ? try(module.api_node.IDENTITY_PRINCIPAL_ID, "") : try(module.api_python.IDENTITY_PRINCIPAL_ID, ""),var.environment_principal_id]
   secrets = [
     {
       name  = local.cosmos_connection_string_key
@@ -197,5 +197,5 @@ module "apimApi" {
   api_name                 = "todo-api"
   api_display_name         = "Simple Todo API"
   api_path                 = "todo"
-  api_backend_url          = local.runtimeName == "nodejs" ? module.api_node.URI : module.api_python.URI
+  api_backend_url          = local.runtimeName == "nodejs" ? try(module.api_node.URI, "") : try(module.api_python.URI, "")
 }
