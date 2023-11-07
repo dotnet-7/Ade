@@ -77,7 +77,7 @@ resource "null_resource" "webapp_basic_auth_disable" {
 resource "azurerm_key_vault_access_policy" "user" {
   key_vault_id = var.key_vault_id
   tenant_id    = data.azurerm_client_config.current.tenant_id
-  object_id    = azurerm_linux_web_app.web.IDENTITY_PRINCIPAL_ID
+  object_id    = azurerm_linux_web_app.web.identity.0.principal_id
   secret_permissions = [
     "Get",
     "Set",
