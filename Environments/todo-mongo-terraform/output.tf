@@ -40,3 +40,7 @@ output "USE_APIM" {
 output "SERVICE_API_ENDPOINTS" {
   value = var.useAPIM ? [ module.apimApi[0].SERVICE_API_URI, local.runtimeName == "nodejs" ? try(module.api_node.URI, "") : try(module.api_python.URI, "")  ] : [] 
 }
+
+output "SERVICE_PRINCIPAL_ID" {
+  value = local.runtimeName == "nodejs" ? try(module.api_node.IDENTITY_PRINCIPAL_ID, "") : try(module.api_python.IDENTITY_PRINCIPAL_ID, "")
+}

@@ -63,14 +63,13 @@ module "keyvault" {
   rg_name                  = data.azurerm_resource_group.rg.name
   tags                     = local.tags
   resource_token           = local.resource_token
-  access_policy_object_ids = [local.runtimeName == "nodejs" ? try(module.api_node.IDENTITY_PRINCIPAL_ID, "") : try(module.api_python.IDENTITY_PRINCIPAL_ID, ""),var.environment_principal_id]
+  access_policy_object_ids = [output.SERVICE_PRINCIPAL_ID,var.environment_principal_id]
   secrets = [
     {
       name  = local.cosmos_connection_string_key
       value = module.cosmos.AZURE_COSMOS_CONNECTION_STRING
     }
   ]
-  depends_on = [ module.api_python, module.api_node ]
 }
 
 # ------------------------------------------------------------------------------------------------------
