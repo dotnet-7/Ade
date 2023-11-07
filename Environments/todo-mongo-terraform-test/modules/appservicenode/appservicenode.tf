@@ -33,9 +33,9 @@ resource "azurerm_linux_web_app" "web" {
     use_32_bit_worker = var.use_32_bit_worker
     ftps_state        = "FtpsOnly"
     app_command_line  = var.app_command_line
-    application_stack {
-      node_version = var.node_version
-    }
+    # application_stack {
+    #   node_version = var.node_version
+    # }
     health_check_path = var.health_check_path
   }
 
