@@ -68,10 +68,6 @@ module "keyvault" {
     {
       name  = local.cosmos_connection_string_key
       value = module.cosmos.AZURE_COSMOS_CONNECTION_STRING
-    },
-    {
-      name  = "principalId"
-      value = local.runtimeName == "nodejs" ? try(module.api_node.IDENTITY_PRINCIPAL_ID, "") : try(module.api_python.IDENTITY_PRINCIPAL_ID, "")
     }
   ]
 }
@@ -126,10 +122,14 @@ module "web" {
 
 module "api_node" {
   count          = local.runtimeName == "nodejs" ? 1 : 0
-  source         = "./modules/appservicenode"
+  source         = "./modules/appservicenodeapi"
   location       = var.location
   rg_name        = data.azurerm_resource_group.rg.name
   resource_token = local.resource_token
+
+  key_vault_id   = module.keyvault.AZURE_KEY_VAULT_ID
+  tenant_id      = module.keyvault.AZURE_TENANT_ID
+
 
   tags               = merge(local.tags, { "azd-service-name" : "api" })
   service_name       = "api"
