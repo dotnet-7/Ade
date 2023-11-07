@@ -3,7 +3,7 @@ locals {
   sha                          = base64encode(sha256("${var.environment_name}${var.location}${data.azurerm_client_config.current.subscription_id}"))
   resource_token               = substr(replace(lower(local.sha), "[^A-Za-z0-9_]", ""), 0, 13)
   cosmos_connection_string_key = "AZURE-COSMOS-CONNECTION-STRING"
-  runtimeName                  = replace(replace(var.repoUrl,"https://github.com/Azure-Samples/todo-",""),"-mongo-terraform","")
+  runtimeName                  = var.repoUrl == "https://github.com/Azure-Samples/todo-nodejs-mongo-terraform" ? "nodejs" : "python"
 }
 # ------------------------------------------------------------------------------------------------------
 # Deploy resource Group
