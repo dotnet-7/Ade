@@ -70,7 +70,7 @@ module "keyvault" {
       value = module.cosmos.AZURE_COSMOS_CONNECTION_STRING
     }
   ]
-  depends_on = local.runtimeName == "nodejs"?  [ module.api_node ] : [ module.api_python ]
+  depends_on = [module.api]
 }
 
 # ------------------------------------------------------------------------------------------------------
