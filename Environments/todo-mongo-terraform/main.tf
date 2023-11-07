@@ -3,7 +3,7 @@ locals {
   sha                          = base64encode(sha256("${var.environment_name}${var.location}${data.azurerm_client_config.current.subscription_id}"))
   resource_token               = substr(replace(lower(local.sha), "[^A-Za-z0-9_]", ""), 0, 13)
   cosmos_connection_string_key = "AZURE-COSMOS-CONNECTION-STRING"
-  runtimeName                  = var.repoUrl == "https://github.com/Azure-Samples/todo-nodejs-mongo-terraform" ? "nodejs" : "python"
+  runtimeName                  = replace(replace(var.repoUrl,"https://github.com/Azure-Samples/todo-",""),"-mongo-terraform","")
 }
 # ------------------------------------------------------------------------------------------------------
 # Deploy resource Group
@@ -70,7 +70,6 @@ module "keyvault" {
       value = module.cosmos.AZURE_COSMOS_CONNECTION_STRING
     }
   ]
-  depends_on = [module.api]
 }
 
 # ------------------------------------------------------------------------------------------------------
@@ -120,8 +119,55 @@ module "web" {
 # ------------------------------------------------------------------------------------------------------
 # Deploy app service api
 # ------------------------------------------------------------------------------------------------------
-module "api" {
-  source = "./api"
+module "api_node" {
+  count          = local.runtimeName == "nodejs" ? 1 : 0
+  source         = "./modules/appservicenode"
+  location       = var.location
+  rg_name        = data.azurerm_resource_group.rg.name
+  resource_token = local.resource_token
+
+  tags               = merge(local.tags, { "azd-service-name" : "api" })
+  service_name       = "api"
+  appservice_plan_id = module.appserviceplan.APPSERVICE_PLAN_ID
+  app_settings = {
+    "AZURE_COSMOS_CONNECTION_STRING_KEY"    = local.cosmos_connection_string_key
+    "AZURE_COSMOS_DATABASE_NAME"            = module.cosmos.AZURE_COSMOS_DATABASE_NAME
+    "SCM_DO_BUILD_DURING_DEPLOYMENT"        = "true"
+    "AZURE_KEY_VAULT_ENDPOINT"              = module.keyvault.AZURE_KEY_VAULT_ENDPOINT
+    "APPLICATIONINSIGHTS_CONNECTION_STRING" = module.applicationinsights.APPLICATIONINSIGHTS_CONNECTION_STRING
+    "API_ALLOW_ORIGINS"                     = "https://app-web-${local.resource_token}.azurewebsites.net"
+  }
+
+  app_command_line = ""
+
+  identity = [{
+    type = "SystemAssigned"
+  }]
+}
+module "api_python" {
+  count          = local.runtimeName == "python" ? 1 : 0
+  source         = "./modules/appservicepython"
+  location       = var.location
+  rg_name        = data.azurerm_resource_group.rg.name
+  resource_token = local.resource_token
+
+  tags               = merge(local.tags, { "azd-service-name" : "api" })
+  service_name       = "api"
+  appservice_plan_id = module.appserviceplan.APPSERVICE_PLAN_ID
+  app_settings = {
+    "AZURE_COSMOS_CONNECTION_STRING_KEY"    = local.cosmos_connection_string_key
+    "AZURE_COSMOS_DATABASE_NAME"            = module.cosmos.AZURE_COSMOS_DATABASE_NAME
+    "SCM_DO_BUILD_DURING_DEPLOYMENT"        = "true"
+    "AZURE_KEY_VAULT_ENDPOINT"              = module.keyvault.AZURE_KEY_VAULT_ENDPOINT
+    "APPLICATIONINSIGHTS_CONNECTION_STRING" = module.applicationinsights.APPLICATIONINSIGHTS_CONNECTION_STRING
+    "API_ALLOW_ORIGINS"                     = "https://app-web-${local.resource_token}.azurewebsites.net"
+  }
+
+  app_command_line = ""
+
+  identity = [{
+    type = "SystemAssigned"
+  }]
 }
 
 # ------------------------------------------------------------------------------------------------------
