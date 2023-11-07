@@ -72,3 +72,7 @@ variable "health_check_path" {
 variable "key_vault_id" {
   type = string
 }
+
+variable "tenant_id" {
+  type = string
+}

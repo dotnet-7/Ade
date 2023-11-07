@@ -155,8 +155,11 @@ module "api_python" {
   location       = var.location
   rg_name        = data.azurerm_resource_group.rg.name
   resource_token = local.resource_token
-  
+
   key_vault_id   = module.keyvault.AZURE_KEY_VAULT_ID
+  tenant_id      = module.keyvault.AZURE_TENANT_ID
+
+
   tags               = merge(local.tags, { "azd-service-name" : "api" })
   service_name       = "api"
   appservice_plan_id = module.appserviceplan.APPSERVICE_PLAN_ID
