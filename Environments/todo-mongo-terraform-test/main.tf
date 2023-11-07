@@ -74,7 +74,7 @@ module "keyvault" {
       value = local.runtimeName == "nodejs" ? try(module.api_node.IDENTITY_PRINCIPAL_ID, "") : try(module.api_python.IDENTITY_PRINCIPAL_ID, "")
     }
   ]
-  depends_on = local.runtimeName == "nodejs"?  [ module.api_node ] : [ module.api_python ]
+  depends_on = [module.api]
 }
 
 # ------------------------------------------------------------------------------------------------------
