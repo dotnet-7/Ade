@@ -70,6 +70,7 @@ module "keyvault" {
       value = module.cosmos.AZURE_COSMOS_CONNECTION_STRING
     }
   ]
+  depends_on = [ module.api_python, module.api_node ]
 }
 
 # ------------------------------------------------------------------------------------------------------
