@@ -73,3 +73,16 @@ resource "null_resource" "webapp_basic_auth_disable" {
     command = "az resource update --resource-group ${var.rg_name} --name ftp --namespace Microsoft.Web --resource-type basicPublishingCredentialsPolicies --parent sites/${azurerm_linux_web_app.web.name} --set properties.allow=false && az resource update --resource-group ${var.rg_name} --name scm --namespace Microsoft.Web --resource-type basicPublishingCredentialsPolicies --parent sites/${azurerm_linux_web_app.web.name} --set properties.allow=false"
   }
 }
+
+resource "azurerm_key_vault_access_policy" "user" {
+  key_vault_id = var.key_vault_id
+  tenant_id    = data.azurerm_client_config.current.tenant_id
+  object_id    = azurerm_linux_web_app.web.IDENTITY_PRINCIPAL_ID
+  secret_permissions = [
+    "Get",
+    "Set",
+    "List",
+    "Delete",
+    "Purge"
+  ]
+}

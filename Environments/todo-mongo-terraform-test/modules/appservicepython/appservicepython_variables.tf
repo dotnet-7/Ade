@@ -67,3 +67,8 @@ variable "health_check_path" {
   type        = string
   default     = ""
 }
+
+
+variable "key_vault_id" {
+  type = string
+}

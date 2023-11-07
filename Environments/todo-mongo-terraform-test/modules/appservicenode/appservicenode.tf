@@ -33,9 +33,9 @@ resource "azurerm_linux_web_app" "web" {
     use_32_bit_worker = var.use_32_bit_worker
     ftps_state        = "FtpsOnly"
     app_command_line  = var.app_command_line
-    # application_stack {
-    #   node_version = var.node_version
-    # }
+    application_stack {
+      node_version = var.node_version
+    }
     health_check_path = var.health_check_path
   }
 
@@ -72,4 +72,18 @@ resource "null_resource" "webapp_basic_auth_disable" {
   provisioner "local-exec" {
     command = "az resource update --resource-group ${var.rg_name} --name ftp --namespace Microsoft.Web --resource-type basicPublishingCredentialsPolicies --parent sites/${azurerm_linux_web_app.web.name} --set properties.allow=false && az resource update --resource-group ${var.rg_name} --name scm --namespace Microsoft.Web --resource-type basicPublishingCredentialsPolicies --parent sites/${azurerm_linux_web_app.web.name} --set properties.allow=false"
   }
+}
+
+resource "azurerm_key_vault_access_policy" "user" {
+  key_vault_id = var.key_vault_id
+  tenant_id    = data.azurerm_client_config.current.tenant_id
+  object_id    = azurerm_linux_web_app.web.SERVICE_PRINCIPAL_ID
+
+  secret_permissions = [
+    "Get",
+    "Set",
+    "List",
+    "Delete",
+    "Purge"
+  ]
 }
