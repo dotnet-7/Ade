@@ -68,10 +68,4 @@ variable "health_check_path" {
   default     = ""
 }
 
-variable "principal_id" {
-  type = string
-}
 
-variable "key_vault_id" {
-  type = string
-}
